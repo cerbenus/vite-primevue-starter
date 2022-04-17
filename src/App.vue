@@ -1,31 +1,27 @@
 <template>
-  <div id='bar' />
   <router-view />
 </template>
 
-<script setup lang='ts'>
-
-import { useDataStore } from '@/store/data';
-
-const dataStore = useDataStore();
-
-onMounted(async () => {
-  await dataStore.$load({name:'app-data' }).catch((error: any) => console.log(error));
-});
-
-useHead({
-  title: 'Vite PrimeVue Starter',
-  meta: [
+<script>
+export default
+{
+  name: 'App',
+  methods:
+  {
+    updateTheme(themeName, themeColor)
     {
-      name: 'description',
-      content: 'PrimeVue Starter starter for vue and vite',
-    },
-  ],
-});
-
-
+      const newValue = '/themes/' + themeName + '-' + themeColor + '/theme.css';
+      const relElements = Array.prototype.slice.call(document.getElementsByTagName('link'));
+      relElements.forEach((element) =>
+      {
+        if (element.getAttribute('href') && element.getAttribute('href').indexOf('/themes/') > -1)
+        {
+          element.setAttribute('href', newValue);
+        }
+      });
+    }
+  }
+};
 </script>
 
-<style lang='scss'>
-@import 'App.scss';
-</style>
+<style lang='scss' src="./App.scss"></style>
