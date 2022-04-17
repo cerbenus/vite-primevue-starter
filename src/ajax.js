@@ -1,5 +1,7 @@
 import axiosBase from 'axios';
+import router from './router';
 import events, { AJAX_ERROR, SHOW_SPINNER, HIDE_SPINNER } from './eventBus';
+import { mainStore } from './store';
 
 import mockup from './mockup/mockApi'; // comment this out in order to use the real API
 
@@ -45,6 +47,12 @@ function checkError(err)
         message: 'API endpoint was not found'
       });
   }
+  else if (err.response && err.response.status === 401)
+  {
+    const store = mainStore();
+    store.logout();
+    router.push({ name: 'login' });
+  }
   else if (err.response && err.response.data)
   {
     events.emit(AJAX_ERROR, err.response.data.error || err.response.data);
@@ -72,7 +80,6 @@ axios.interceptors.request.use(
     events.emit(HIDE_SPINNER);
     // we return NULL in case of error
     checkError(error);
-    throw error;
   }
 );
 
@@ -88,7 +95,6 @@ axios.interceptors.response.use(
     events.emit(HIDE_SPINNER);
     // we return NULL in case of error
     checkError(error);
-    throw error;
   }
 );
 

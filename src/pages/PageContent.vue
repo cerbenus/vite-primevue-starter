@@ -1,13 +1,14 @@
 <template>
   <div class="flex p-2">
+    <Toast position="top-center" group="content" />
     <form ref="frm" class="m-auto" @submit.prevent="submitForm(!v$.$invalid)">
-      <Card>
+      <Card style="width: 350px; max-width: 90vw;">
         <template #content>
           <div class="flex flex-column">
             <label for="urls" :class="{'p-error': v$.chosenBlog.$invalid && submitted}">* Blog URL</label>
             <Dropdown id="urls" v-model="v$.chosenBlog.$model" :options="blogUrls" option-value="id" option-label="url" :class="{'p-invalid': v$.chosenBlog.$invalid && submitted}" />
             <div v-if="v$.chosenBlog.$error && submitted">
-              <div v-for="(error, index) in v$.chosenBlog.$errors" id="blog-error" :key="index">
+              <div v-for="(error, index) in v$.chosenBlog.$errors" :key="index">
                 <small class="p-error">{{ error.$message }}</small>
               </div>
             </div>
@@ -16,7 +17,7 @@
             <label for="term" class="mt-3" :class="{'p-error': v$.searchTerm.$invalid && submitted}">* Search term</label>
             <InputText id="term" v-model.trim="v$.searchTerm.$model" :class="{'p-invalid': v$.searchTerm.$invalid && submitted}" />
             <div v-if="v$.searchTerm.$error && submitted">
-              <div v-for="(error, index) in v$.searchTerm.$errors" id="term-error" :key="index">
+              <div v-for="(error, index) in v$.searchTerm.$errors" :key="index">
                 <small class="p-error">{{ error.$message }}</small>
               </div>
             </div>
@@ -28,7 +29,7 @@
         </template>
         <template #footer>
           <div class="flex">
-            <Button type="submit" label="Generate" class="mx-auto" :disabled="!hasAllKeys" />
+            <Button type="submit" label="Generate" class="mx-auto" />
           </div>
         </template>
       </Card>
@@ -102,6 +103,17 @@ export default
       },
       submitForm(isFormValid)
       {
+        if (!this.hasAllKeys)
+        {
+          this.$toast.add({
+            group: 'ajax',
+            severity: 'error',
+            summary: 'Missing API keys',
+            detail: 'Not all API keys have been persisted',
+            life: 3000
+          });
+          return;
+        }
         this.submitted = true;
         if (isFormValid)
         {
@@ -109,6 +121,18 @@ export default
             blogUrl: this.chosenBlog.url, // the good practice is to use ID
             searchTerm: this.searchTerm,
             numberArticles: this.numberArticles,
+          }).then(response =>
+          {
+            if (response)
+            {
+              this.$toast.add({
+                group: 'content',
+                severity: 'success',
+                summary: 'Success',
+                detail: 'The blog is being scrapped in the background - please be patient',
+                life: 2000
+              });
+            }
           });
         }
       },

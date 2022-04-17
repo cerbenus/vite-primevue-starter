@@ -23,7 +23,9 @@ export default defineConfig({
       path: '/ws'
     }
   },
-
+  build: {
+    sourcemap: true,
+  },
   optimizeDeps: {
     include: [
       'vue',

@@ -49,6 +49,7 @@ import PanelMenu from 'primevue/panelmenu';
 import Password from 'primevue/password';
 import PickList from 'primevue/picklist';
 import ProgressBar from 'primevue/progressbar';
+import ProgressSpinner from 'primevue/progressspinner';
 import Rating from 'primevue/rating';
 import RadioButton from 'primevue/radiobutton';
 import SelectButton from 'primevue/selectbutton';
@@ -152,6 +153,7 @@ export const install = (app) => {
   app.component('Password', Password);
   app.component('PickList', PickList);
   app.component('ProgressBar', ProgressBar);
+  app.component('ProgressSpinner', ProgressSpinner);
   app.component('RadioButton', RadioButton);
   app.component('Rating', Rating);
   app.component('SelectButton', SelectButton);

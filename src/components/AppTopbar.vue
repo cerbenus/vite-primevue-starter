@@ -2,7 +2,7 @@
   <header class="flex px-4 py-3 justify-content-between align-items-center">
     <router-link to="/" class="menu_home">Vite PrimeVue Starter</router-link>
 
-    <ul class="flex user_menu">
+    <ul v-if="store.hasSession" class="flex user_menu">
       <li v-if="$route.name !== 'content'">
         <button class="p-link layout-topbar-button" @click="gotoIndex">
           <i class="pi pi-times-circle" />
@@ -22,6 +22,9 @@
 </template>
 
 <script>
+import ajax from '../ajax';
+import { mainStore } from '../store';
+
 export default
 {
   name: 'AppTopbar',
@@ -44,12 +47,23 @@ export default
           },
         ];
       },
+      store()
+      {
+        return mainStore();
+      },
     },
   methods:
     {
       logout()
       {
-
+        ajax.post('/logout').then(response =>
+        {
+          if (response)
+          {
+            this.store.logout();
+            this.$router.push('/login');
+          }
+        });
       },
       gotoIndex()
       {
