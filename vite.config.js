@@ -18,6 +18,16 @@ process.env.VITE_APP_VERSION = pkg.version;
  */
 export default defineConfig({
   server: {
+    https: false,
+    port: 8000,
+    proxy: {
+      '/api': {
+        target: 'http://your.api.com',
+        changeOrigin: true,
+        secure: false,
+        //rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
     hmr: {
       port: false,
       path: '/ws'

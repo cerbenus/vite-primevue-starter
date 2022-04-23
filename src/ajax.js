@@ -3,13 +3,13 @@ import router from './router';
 import events, { AJAX_ERROR, SHOW_SPINNER, HIDE_SPINNER } from './eventBus';
 import { mainStore } from './store';
 
-import mockup from './mockup/mockApi'; // comment this out in order to use the real API
+//import mockup from './mockup/mockApi'; // comment this out in order to use the real API
 
 const axios = axiosBase.create({
-  baseURL: '/api', // this will be prepended to all URLs
+  baseURL: '/api/v1', // this will be prepended to all URLs
 });
 
-mockup(axios); // install the mockup adapter - comment this out in order to use the real API
+//mockup(axios); // install the mockup adapter - comment this out in order to use the real API
 
 axios.defaults.timeout = 20 * 1000; // 20 seconds before we cancel the AJAX call
 
@@ -44,7 +44,7 @@ function checkError(err)
     events.emit(AJAX_ERROR,
       {
         code: 'NOT_FOUND',
-        message: 'API endpoint was not found'
+        message: 'API endpoint was not found (' + err.config.url + ')'
       });
   }
   else if (err.response && err.response.status === 401)

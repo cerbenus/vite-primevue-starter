@@ -15,12 +15,16 @@ const routes = [
       {
         path: 'login',
         name: 'login',
-        component: () => import('src/pages/AuthLogin.vue')
+        component: () => import('src/pages/AuthLogin.vue'),
+        meta:
+          {
+            public: true
+          }
       },
       {
         path: 'content',
         name: 'content',
-        component: () => import('src/pages/PageContent.vue')
+        component: () => import('src/pages/PageContent.vue'),
       },
       {
         path: 'manage/blogs',
@@ -37,11 +41,24 @@ const routes = [
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
-    component: NotFound
+    component: NotFound,
+    meta:
+      {
+        public: true
+      }
   }
 ];
+
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+router.beforeEach((to, from, next) =>
+{
+  const user = localStorage.getItem('user');
+  if (to.meta.public || (user && user.token)) next();
+  else next('/login');
+});
+
 export default router;
