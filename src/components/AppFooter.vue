@@ -12,7 +12,7 @@ export default
     {
       version()
       {
-        return import.meta.env.VITE_APP_VERSION;
+        return process.env.VITE_APP_VERSION;
       },
     },
 };

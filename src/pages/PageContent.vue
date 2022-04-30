@@ -62,7 +62,7 @@ export default
     {
       hasAllKeys()
       {
-        return (this.apiKeys.googleTranslation || '') !== '' && (this.apiKeys.scrapingBee || '') !== '';
+        return (this.apiKeys.googleTranslationApiKey || '') !== '' && (this.apiKeys.scrapingBeeApiKey || '') !== '';
       }
     },
   validations()
@@ -86,14 +86,14 @@ export default
     {
       fetchData()
       {
-        ajax.get('/blogs').then(response =>
+        ajax.get('/account/blogs').then(response =>
         {
           if (response)
           {
             this.blogUrls = response;
           }
         });
-        ajax.get('/keys').then(response =>
+        ajax.get('/account/api-keys').then(response =>
         {
           if (response)
           {
@@ -117,10 +117,10 @@ export default
         this.submitted = true;
         if (isFormValid)
         {
-          ajax.post('/generate', {
+          ajax.post('/content/articles', {
             blogUrl: this.chosenBlog.url, // the good practice is to use ID
             searchTerm: this.searchTerm,
-            numberArticles: this.numberArticles,
+            articles: this.numberArticles,
           }).then(response =>
           {
             if (response)

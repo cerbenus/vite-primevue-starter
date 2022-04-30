@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import ajax from '../ajax';
 import { mainStore } from '../store';
 
 export default
@@ -56,14 +55,8 @@ export default
     {
       logout()
       {
-        ajax.post('/logout').then(response =>
-        {
-          if (response)
-          {
-            this.store.logout();
-            this.$router.push('/login');
-          }
-        });
+        this.store.logout();
+        this.$router.push('/login');
       },
       gotoIndex()
       {

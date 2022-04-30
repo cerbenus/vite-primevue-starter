@@ -1,10 +1,10 @@
 {
-  "name": "vite-primevue-starter",
+  "name": "primevue-starter",
   "version": "1.1.11",
   "license": "MIT",
   "scripts": {
-    "dev": "vite --port 8000",
-    "build": "vite build"
+    "dev": "node --preserve-symlinks --preserve-symlinks-main ./node_modules/@vue/cli-service/bin/vue-cli-service.js serve",
+    "build": "node --preserve-symlinks --preserve-symlinks-main ./node_modules/@vue/cli-service/bin/vue-cli-service.js build"
   },
   "dependencies": {
     "@vuelidate/core": "^2.0.0-alpha.40",
@@ -23,16 +23,10 @@
     "vuelidate": "^0.7.7"
   },
   "devDependencies": {
-    "@iconify/json": "^2.1.23",
-    "@unocss/preset-attributify": "^0.30.8",
-    "@unocss/preset-icons": "^0.30.8",
-    "@unocss/preset-typography": "^0.30.8",
-    "@vitejs/plugin-vue": "^2.3.1",
     "@vue/babel-preset-app": "^5.0.4",
+    "@vue/cli-service": "^5.0.4",
     "@vue/eslint-config-standard": "~6.1.0",
     "autoprefixer": "^10.4.4",
-    "cross-env": "^7.0.3",
-    "crypto-js": "^4.1.1",
     "eslint": "^8.12.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
@@ -40,13 +34,6 @@
     "eslint-plugin-vue": "^8.5.0",
     "postcss": "^8.4.12",
     "postcss-nesting": "^10.1.3",
-    "sass": "^1.49.10",
-    "unocss": "^0.30.8",
-    "unplugin-auto-import": "^0.6.9",
-    "unplugin-vue-components": "^0.18.5",
-    "vite": "^2.9.1",
-    "vite-plugin-eslint": "^1.3.0",
-    "vite-plugin-inspect": "^0.4.3",
-    "vite-plugin-restart": "^0.1.1"
+    "sass": "^1.49.10"
   }
 }

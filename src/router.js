@@ -56,7 +56,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) =>
 {
-  const user = localStorage.getItem('user');
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
   if (to.meta.public || (user && user.token)) next();
   else next('/login');
 });

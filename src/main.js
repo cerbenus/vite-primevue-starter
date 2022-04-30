@@ -3,7 +3,6 @@ import App from './App.vue';
 import router from './router';
 import { install as PrimeVue } from './primevue';
 import { install as Pinia } from './store';
-import 'uno.css';
 import 'primeflex/primeflex.css';
 
 const myApp = createApp(App);

@@ -6,7 +6,7 @@ import { mainStore } from './store';
 //import mockup from './mockup/mockApi'; // comment this out in order to use the real API
 
 const axios = axiosBase.create({
-  baseURL: '/api/v1', // this will be prepended to all URLs
+  baseURL: 'http://136.53.35.203:8181/api/v1', // this will be prepended to all URLs
 });
 
 //mockup(axios); // install the mockup adapter - comment this out in order to use the real API
@@ -70,7 +70,7 @@ axios.interceptors.request.use(
     const user = JSON.parse(localStorage.getItem('user'));
     if (user && user.token)
     {
-      config.headers.Authorization = `Bearer ${user.token}`;
+      config.headers.Authorization = `${user.type} ${user.token}`;
     }
     events.emit(SHOW_SPINNER);
     return config;
@@ -88,7 +88,7 @@ axios.interceptors.response.use(
   response =>
   {
     events.emit(HIDE_SPINNER);
-    return response.data.data;
+    return response.data;
   },
   error =>
   {

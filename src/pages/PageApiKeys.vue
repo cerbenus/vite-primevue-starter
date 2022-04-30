@@ -5,10 +5,10 @@
         <template #content>
           <div class="flex flex-column">
             <label for="google">Google Translation API key</label>
-            <InputText id="google" v-model.trim="apiKeys.googleTranslation" />
+            <InputText id="google" v-model.trim="apiKeys.googleTranslationApiKey" />
 
             <label for="scraping" class="mt-3">Scraping Bee API key</label>
-            <InputText id="scraping" v-model.trim="apiKeys.scrapingBee" />
+            <InputText id="scraping" v-model.trim="apiKeys.scrapingBeeApiKey" />
           </div>
         </template>
         <template #footer>
@@ -32,8 +32,8 @@ export default
     return {
       apiKeys:
         {
-          googleTranslation: '',
-          scrapingBee: '',
+          googleTranslationApiKey: '',
+          scrapingBeeApiKey: '',
         },
     };
   },
@@ -45,7 +45,7 @@ export default
     {
       fetchData()
       {
-        ajax.get('/keys').then(response =>
+        ajax.get('/account/api-keys').then(response =>
         {
           if (response)
           {
@@ -55,7 +55,7 @@ export default
       },
       submitForm()
       {
-        ajax.put('/keys', this.apiKeys);
+        ajax.post('/account/api-keys', this.apiKeys);
       },
     },
 };

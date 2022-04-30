@@ -110,7 +110,7 @@ export default
     {
       fetchData()
       {
-        ajax.get('/blogs').then(response =>
+        ajax.get('/account/blogs').then(response =>
         {
           if (response)
           {
@@ -123,7 +123,7 @@ export default
         this.submitted = true;
         if (isFormValid)
         {
-          ajax.post('/blogs', this.form).then(response =>
+          ajax.post('/account/blogs', this.form).then(response =>
           {
             if (response)
             {
@@ -146,7 +146,7 @@ export default
           icon: 'pi pi-exclamation-triangle',
           accept: () =>
           {
-            ajax.delete('/blog/' + this.selectedBlogId).then(response =>
+            ajax.delete('/account/blogs/' + this.selectedBlogId).then(response =>
             {
               if (response && response.id)
               {
