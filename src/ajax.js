@@ -6,7 +6,7 @@ import { mainStore } from './store';
 //import mockup from './mockup/mockApi'; // comment this out in order to use the real API
 
 const axios = axiosBase.create({
-  baseURL: 'http://136.53.35.203:8181/api/v1', // this will be prepended to all URLs
+  baseURL: '/api/v1', // this will be prepended to all URLs
 });
 
 //mockup(axios); // install the mockup adapter - comment this out in order to use the real API

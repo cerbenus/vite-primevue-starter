@@ -4,11 +4,11 @@
 
     <Card class="ml-auto mr-3" style="width: 350px; max-width: 90vw;">
       <template #content>
-        <Listbox v-model="selectedBlogId" :options="blogs" option-label="url" option-value="id" list-style="max-height: 240px;" />
+        <Listbox v-model="selectedBlog" :options="blogs" option-label="baseUrl" option-value="baseUrl" list-style="max-height: 240px;" />
       </template>
       <template #footer>
         <div class="flex">
-          <Button label="Delete" class="mx-auto" :disabled="!selectedBlogId" @click="deleteBlog" />
+          <Button label="Delete" class="mx-auto" :disabled="!selectedBlog" @click="deleteBlog" />
         </div>
       </template>
     </Card>
@@ -20,14 +20,14 @@
         </template>
         <template #content>
           <div class="flex flex-column">
-            <label for="blog" :class="{'p-error': v$.form.url.$invalid && submitted}">* Blog URL</label>
-            <InputText id="blog" v-model.trim="v$.form.url.$model" :class="{'p-invalid': v$.form.url.$invalid && submitted}" />
-            <div v-if="v$.form.url.$error && submitted">
-              <div v-for="(error, index) in v$.form.url.$errors" :key="index">
+            <label for="blog" :class="{'p-error': v$.form.baseUrl.$invalid && submitted}">* Blog URL</label>
+            <InputText id="blog" v-model.trim="v$.form.baseUrl.$model" :class="{'p-invalid': v$.form.baseUrl.$invalid && submitted}" />
+            <div v-if="v$.form.baseUrl.$error && submitted">
+              <div v-for="(error, index) in v$.form.baseUrl.$errors" :key="index">
                 <small class="p-error">{{ error.$message }}</small>
               </div>
             </div>
-            <div v-else-if="(v$.form.url.$invalid && submitted) || v$.form.url.$pending.$response" class="p-error">{{ v$.form.url.required.$message }}</div>
+            <div v-else-if="(v$.form.baseUrl.$invalid && submitted) || v$.form.baseUrl.$pending.$response" class="p-error">{{ v$.form.baseUrl.required.$message }}</div>
 
             <label for="user" class="mt-3" :class="{'p-error': v$.form.username.$invalid && submitted}">* Username</label>
             <InputText id="user" v-model.trim="v$.form.username.$model" :class="{'p-invalid': v$.form.username.$invalid && submitted}" />
@@ -38,14 +38,14 @@
             </div>
             <div v-else-if="(v$.form.username.$invalid && submitted) || v$.form.username.$pending.$response" class="p-error">{{ v$.form.username.required.$message }}</div>
 
-            <label for="pass" class="mt-3" :class="{'p-error': v$.form.password.$invalid && submitted}">* Application password</label>
-            <InputText id="pass" v-model.trim="v$.form.password.$model" :class="{'p-invalid': v$.form.password.$invalid && submitted}" />
-            <div v-if="v$.form.password.$error && submitted">
-              <div v-for="(error, index) in v$.form.password.$errors" :key="index">
+            <label for="pass" class="mt-3" :class="{'p-error': v$.form.applicationPassword.$invalid && submitted}">* Application password</label>
+            <InputText id="pass" v-model.trim="v$.form.applicationPassword.$model" :class="{'p-invalid': v$.form.applicationPassword.$invalid && submitted}" />
+            <div v-if="v$.form.applicationPassword.$error && submitted">
+              <div v-for="(error, index) in v$.form.applicationPassword.$errors" :key="index">
                 <small class="p-error">{{ error.$message }}</small>
               </div>
             </div>
-            <div v-else-if="(v$.form.password.$invalid && submitted) || v$.form.password.$pending.$response" class="p-error">{{ v$.form.password.required.$message }}</div>
+            <div v-else-if="(v$.form.applicationPassword.$invalid && submitted) || v$.form.applicationPassword.$pending.$response" class="p-error">{{ v$.form.applicationPassword.required.$message }}</div>
           </div>
         </template>
         <template #footer>
@@ -72,12 +72,12 @@ export default
     return {
       submitted: false,
       blogs: [],
-      selectedBlogId: null,
+      selectedBlog: null,
       form:
         {
-          url: '',
+          baseUrl: '',
           username: '',
-          password: '',
+          applicationPassword: '',
         },
     };
   },
@@ -86,7 +86,7 @@ export default
     return {
       form:
         {
-          url:
+          baseUrl:
             {
               required,
               url,
@@ -95,7 +95,7 @@ export default
             {
               required
             },
-          password:
+          applicationPassword:
             {
               required
             },
@@ -146,7 +146,7 @@ export default
           icon: 'pi pi-exclamation-triangle',
           accept: () =>
           {
-            ajax.delete('/account/blogs/' + this.selectedBlogId).then(response =>
+            ajax.delete('/account/blogs/' + encodeURIComponent(this.selectedBlog)).then(response =>
             {
               if (response && response.id)
               {

@@ -6,7 +6,7 @@
         <template #content>
           <div class="flex flex-column">
             <label for="urls" :class="{'p-error': v$.chosenBlog.$invalid && submitted}">* Blog URL</label>
-            <Dropdown id="urls" v-model="v$.chosenBlog.$model" :options="blogUrls" option-value="id" option-label="url" :class="{'p-invalid': v$.chosenBlog.$invalid && submitted}" />
+            <Dropdown id="urls" v-model="v$.chosenBlog.$model" :options="blogUrls" option-value="baseUrl" option-label="baseUrl" :class="{'p-invalid': v$.chosenBlog.$invalid && submitted}" />
             <div v-if="v$.chosenBlog.$error && submitted">
               <div v-for="(error, index) in v$.chosenBlog.$errors" :key="index">
                 <small class="p-error">{{ error.$message }}</small>
@@ -118,7 +118,7 @@ export default
         if (isFormValid)
         {
           ajax.post('/content/articles', {
-            blogUrl: this.chosenBlog.url, // the good practice is to use ID
+            baseUrl: this.chosenBlog, // the good practice is to use ID
             searchTerm: this.searchTerm,
             articles: this.numberArticles,
           }).then(response =>

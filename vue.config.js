@@ -5,6 +5,19 @@ module.exports = {
   devServer:
     {
       port: 8000,
+      proxy:
+        {
+          '/api':
+            {
+              target: 'http://hbf.slamdunkseo.com',
+              ws: true,
+              changeOrigin: true,
+              onProxyReq: (proxyReq, req, res, options) =>
+              {
+                proxyReq.setHeader('Origin', 'http://hbf.slamdunkseo.com');
+              },
+            }
+        }
     },
   publicPath: '/',
   lintOnSave: false,
